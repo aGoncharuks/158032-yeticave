@@ -1,7 +1,7 @@
 # Личный проект «YetiCave» 
 
 * Студент: [Aleksandrs Goncaruks](https://up.htmlacademy.ru/php/2/user/158032).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Алференков](https://htmlacademy.ru/profile/id103710).
 
 ---
 
