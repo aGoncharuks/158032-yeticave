@@ -16,7 +16,7 @@ $tomorrow = strtotime('tomorrow midnight');
 $now = strtotime('now');
 
 // remaining time to bid end
-$lot_time_remaining = date( 'H:i', $tomorrow - $now );
+$lot_time_remaining = gmdate( 'H:i', $tomorrow - $now );
 
 ?>
 <!DOCTYPE html>
