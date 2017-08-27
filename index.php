@@ -4,7 +4,6 @@ $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 
-// устанавливаем часовой пояс в Московское время
 date_default_timezone_set('Europe/Moscow');
 
 // записать в эту переменную оставшееся время в этом формате (ЧЧ:ММ)
@@ -16,8 +15,9 @@ $tomorrow = strtotime('tomorrow midnight');
 // временная метка для настоящего времени
 $now = strtotime('now');
 
-// далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-// ...
+// remaining time to bid end
+$lot_time_remaining = gmdate( 'H:i', $tomorrow - $now );
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
