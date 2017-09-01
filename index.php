@@ -66,20 +66,9 @@ $lots = [
 ];
 
 //// main page content code
-$page_content = renderTemplate('templates/main.php', [
-  'categories' => $categories,
-  'lots' => $lots
-]);
-
+$page_content = renderTemplate('templates/main.php', compact('categories', 'lots', 'lot_time_remaining'));
 
 // final index page code
-$layout_content = renderTemplate('templates/layout.php', [
-  'content' => $page_content,
-  'title' => $page_title,
-  'is_auth' => $is_auth,
-  'user_name' => $user_name,
-  'user_avatar' => $user_avatar
-]);
-
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'is_auth', 'user_name', 'user_avatar'));
 
 print($layout_content);
