@@ -65,7 +65,7 @@ $lots = [
   ]
 ];
 
-//// main page content code
+// main page content code
 $page_content = renderTemplate('templates/main.php', compact('categories', 'lots', 'lot_time_remaining'));
 
 // final index page code

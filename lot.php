@@ -1,12 +1,31 @@
 <?php
 
+//set default timezone
+date_default_timezone_set('Europe/Moscow');
+
 // ставки пользователей, которыми надо заполнить таблицу
 $bets = [
-    ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
-    ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-' . rand(1, 18) .' hour')],
-    ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
-    ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
+    ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-20 minute')],
+    ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-5 hour')],
+    ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-2 day')],
+    ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('-1 week')]
 ];
+
+// get relative lot time
+function getRelativeLotTime($ts) {
+
+    $tsNow = strtotime('now');
+    $tsHourAgo = strtotime('-1 hour');
+    $tsDayAgo = strtotime('-1 day');
+
+    if($ts < $tsDayAgo) {
+        return date('d.m.y H:i', $ts);
+    } else if($ts < $tsHourAgo) {
+      return gmdate('H', $tsNow - $ts).' часов назад';
+    } else {
+      return date('i', $tsNow - $ts).' минут назад';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -111,11 +130,13 @@ $bets = [
                     <h3>История ставок (<span>4</span>)</h3>
                     <!-- заполните эту таблицу данными из массива $bets-->
                     <table class="history__list">
+                      <?php foreach ($bets as $bet):?>
                         <tr class="history__item">
-                            <td class="history__name"><!-- имя автора--></td>
-                            <td class="history__price"><!-- цена--> р</td>
-                            <td class="history__time"><!-- дата в человеческом формате--></td>
+                                <td class="history__name"><?=$bet['name']?></td>
+                                <td class="history__price"><?=$bet['price']?> р</td>
+                                <td class="history__time"><?=getRelativeLotTime($bet['ts'])?></td>
                         </tr>
+                      <?php endforeach;?>
                     </table>
                 </div>
             </div>
