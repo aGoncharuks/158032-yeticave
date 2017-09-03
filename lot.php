@@ -1,5 +1,7 @@
 <?php
 
+require_once('lotdata.php');
+
 //set default timezone
 date_default_timezone_set('Europe/Moscow');
 
@@ -26,6 +28,15 @@ function getRelativeLotTime($ts) {
       return date('i', $tsNow - $ts).' минут назад';
     }
 }
+
+// open output buffer
+ob_start();
+
+// get lot data
+if(isset($_GET['id'])) {
+  $lot_id = $_GET['id'];
+  $lot = $lots[$lot_id] ?? [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +52,7 @@ function getRelativeLotTime($ts) {
 <header class="main-header">
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
-        <a class="main-header__logo" href="index.html">
+        <a class="main-header__logo" href="index.php">
             <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
@@ -86,23 +97,14 @@ function getRelativeLotTime($ts) {
         </ul>
     </nav>
     <section class="lot-item container">
-        <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+        <h2><?=$lot['title']?></h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
                 <div class="lot-item__image">
-                    <img src="img/lot-image.jpg" width="730" height="548" alt="Сноуборд">
+                    <img src="<?=$lot['image']?>" width="730" height="548" alt="Сноуборд">
                 </div>
-                <p class="lot-item__category">Категория: <span>Доски и лыжи</span></p>
-                <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
-                    снег
-                    мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
-                    снаряд
-                    отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
-                    кэмбер
-                    позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
-                    просто
-                    посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
-                    равнодушным.</p>
+                <p class="lot-item__category">Категория: <span><?=$lot['category']?></span></p>
+                <p class="lot-item__description"><?=$lot['description']?></p>
             </div>
             <div class="lot-item__right">
                 <div class="lot-item__state">
@@ -112,10 +114,10 @@ function getRelativeLotTime($ts) {
                     <div class="lot-item__cost-state">
                         <div class="lot-item__rate">
                             <span class="lot-item__amount">Текущая цена</span>
-                            <span class="lot-item__cost">11 500</span>
+                            <span class="lot-item__cost"><?=$lot['cost']?></span>
                         </div>
                         <div class="lot-item__min-cost">
-                            Мин. ставка <span>12 000 р</span>
+                            Мин. ставка <span><?=$lot['min_bet']?> р</span>
                         </div>
                     </div>
                     <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
@@ -206,3 +208,15 @@ function getRelativeLotTime($ts) {
 
 </body>
 </html>
+
+
+<?php
+// return page content if lot found, else return empty page with 404 status
+  if($lot) {
+    ob_flush();
+  } else {
+    header("HTTP/1.0 404 Not Found");
+    ob_clean();
+    require_once('templates/404.php');
+  }
+?>
