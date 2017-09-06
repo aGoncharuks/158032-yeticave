@@ -5,12 +5,12 @@
 
   session_start();
 
+  // if not logged in - return 403 status and redirect to login page
+  if(!$_SESSION['user']) {
+    goToLoginPage();
+  }
+
   $title = 'Добавить лот';
-
-  $is_auth = (bool) rand(0, 1);
-  $user_name = 'Константин';
-  $user_avatar = 'img/user.jpg';
-
   $required = ['title', 'category', 'cost', 'image', 'description', 'min_bet', 'end_date'];
   $rules = ['cost' => 'validateNumber', 'min_bet' => 'validateNumber'];
   $errors = [];
@@ -72,8 +72,8 @@
 // lot page content code
 $page_content = renderTemplate('templates/add.php', compact('errors'));
 
-// final index page code
-$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'is_auth', 'user_name', 'user_avatar'));
+// final page code
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
 
 print($layout_content);
 

@@ -3,13 +3,10 @@
 require_once('functions.php');
 require_once('lotdata.php');
 
-$title = 'Аукцион Yeticave';
-
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Константин';
-$user_avatar = 'img/user.jpg';
-
+session_start();
 date_default_timezone_set('Europe/Moscow');
+
+$title = 'Аукцион Yeticave';
 
 $lot_time_remaining = "00:00";
 $tomorrow = strtotime('tomorrow midnight');
@@ -30,6 +27,6 @@ $categories = [
 $page_content = renderTemplate('templates/index.php', compact('categories', 'lots', 'lot_time_remaining'));
 
 // final index page code
-$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'is_auth', 'user_name', 'user_avatar'));
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
 
 print($layout_content);

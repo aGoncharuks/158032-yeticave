@@ -39,12 +39,44 @@ function renderTemplate($template_path, $data = array())
 }
 
 /**
- * Shows page 404 and return 404 status in page wasn't found
+ * Returns 404 status and redirects to 404.php
  */
-function showPageNotFound() {
+function goToPageNotFound() {
+
+  // clean output buffer if was opened
+  if(ini_get('output_buffering')) {
+    ob_clean();
+  }
+
   header("HTTP/1.0 404 Not Found");
-  ob_clean();
-  require_once('templates/404.php');
+  header("Location: 404.php");
+}
+
+/**
+ * Redirects to main page
+ */
+function goToMainPage() {
+
+  // clean output buffer if was opened
+  if(ini_get('output_buffering')) {
+    ob_clean();
+  }
+
+  header("Location: index.php");
+}
+
+/**
+ * Returns 403 status and redirects to login.php
+ */
+function goToLoginPage() {
+
+  // clean output buffer if was opened
+  if(ini_get('output_buffering')) {
+    ob_clean();
+  }
+
+  header('HTTP/1.0 403 Forbidden');
+  header("Location: login.php");
 }
 
 /**
