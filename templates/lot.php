@@ -45,18 +45,19 @@
               Мин. ставка <span><?=$lot['min_bet']?> р</span>
             </div>
           </div>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-            <p class="lot-item__form-item">
-              <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="12 000">
-            </p>
-            <button type="submit" class="button">Сделать ставку</button>
-          </form>
+          <?php if ( !$already_bet ): ?>
+            <form class="lot-item__form" action="lot.php?id=<?=$_GET['id'];?>" method="post">
+              <p class="lot-item__form-item form__item <?php echo in_array('cost', $errors) ? 'form__item--invalid' : '';?>">
+                <label for="cost">Ваша ставка</label>
+                <input id="cost" type="number" name="cost" placeholder="12 000" value="<?=$_POST['cost'];?>">
+              </p>
+              <button type="submit" class="button">Сделать ставку</button>
+            </form>
+          <?php endif;?>
         </div>
-      <?php endif; ?>
+      <?php endif;?>
       <div class="history">
         <h3>История ставок (<span>4</span>)</h3>
-        <!-- заполните эту таблицу данными из массива $bets-->
         <table class="history__list">
           <?php foreach ($bets as $bet):?>
             <tr class="history__item">
