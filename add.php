@@ -1,7 +1,7 @@
 <?php
 
-  require_once('functions.php');
-  require_once('lotdata.php');
+  require_once 'functions.php';
+  require_once 'lotdata.php';
 
   session_start();
 
@@ -15,13 +15,14 @@
   $rules = ['cost' => 'validateNumber', 'min_bet' => 'validateNumber'];
   $errors = [];
   $image_mime_types = ['image/png', 'image/jpeg'];
+  $info_msg = '';
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    foreach ($_POST as $key => $value) {
+    foreach ($_POST['form'] as $key => $value) {
 
       // required fields validation
-      if (in_array($key, $required) && $value == '') {
+      if (!$_POST['form'][$key] || in_array($key, $required) && $value == '') {
         $errors[] = $key;
       }
 
@@ -36,7 +37,6 @@
 
     // lot image file upload
     if (isset($_FILES['image']) && !$_FILES['image']['error']) {
-
       $file_info = finfo_open(FILEINFO_MIME_TYPE);
       $file_tmp_name = $_FILES['image']['tmp_name'];
       $file_type = finfo_file($file_info, $file_tmp_name);
@@ -47,7 +47,11 @@
       } else {
         $file_name = $_FILES['image']['name'];
         $file_path = __DIR__ . '/img/' . $file_name;
-        move_uploaded_file($file_tmp_name, $file_path);
+
+        // in image save failed for any reason on server side(directory name changed etc.) => show info message to user
+        if (!move_uploaded_file($file_tmp_name, $file_path)) {
+          $info_msg = 'Ошибка при сохранении картинки, пожалуйста свяжитесь с нашим техническим отделом';
+        };
 
         // save image in session to avoid loosing image if form don't pass validation in first attempt
         $_SESSION['image'] = $_FILES['image'];
@@ -70,7 +74,7 @@
   }
 
 // lot page content code
-$page_content = renderTemplate('templates/add.php', compact('errors'));
+$page_content = renderTemplate('templates/add.php', compact('errors', 'info_msg'));
 
 // final page code
 $layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));

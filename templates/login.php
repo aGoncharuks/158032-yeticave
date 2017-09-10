@@ -25,7 +25,7 @@
     <div class="form__item <?php echo in_array('email', $errors['required']) ||
     in_array('email', $errors['custom']) ? 'form__item--invalid' : '';?>">
       <label for="email">E-mail*</label>
-      <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=$_POST['email'];?>">
+      <input id="email" type="text" name="form[email]" placeholder="Введите e-mail" value="<?=$_POST['form']['email'];?>">
       <?php if ( in_array('email', $errors['required']) ): ?>
         <span class="form__error">Введите e-mail</span>
       <?php elseif ( in_array('email', $errors['custom']) ): ?>
@@ -34,7 +34,7 @@
     </div>
     <div class="form__item form__item--last <?php echo in_array('password', $errors['required']) || in_array('password', $errors['custom']) ? 'form__item--invalid' : '';?>">
       <label for="password">Пароль*</label>
-      <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?=$_POST['password'];?>">
+      <input id="password" type="password" name="form[password]" placeholder="Введите пароль" value="<?=$_POST['form']['password'];?>">
       <?php if ( in_array('password', $errors['required']) ): ?>
         <span class="form__error">Введите пароль</span>
       <?php elseif ( in_array('password', $errors['custom']) ): ?>

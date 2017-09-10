@@ -1,7 +1,7 @@
 <?php
 
-  require_once('functions.php');
-  require_once('lotdata.php');
+  require_once 'functions.php';
+  require_once 'lotdata.php';
 
   //check if there is no existing bet for this lot
   function checkIfAlreadyBet($bets) {
@@ -50,10 +50,10 @@
 
   //handle bet adding form submit
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    foreach ($_POST as $key => $value) {
+    foreach ($_POST['form'] as $key => $value) {
 
       // required fields validation
-      if (in_array($key, $required) && $value == '') {
+      if (!$_POST['form'][$key] || in_array($key, $required) && $value == '') {
         $errors[] = $key;
       }
 
@@ -69,7 +69,7 @@
       if (!count($errors)) {
 
         $new_bet = [
-          'cost' => $_POST['cost'],
+          'cost' => $_POST['form']['cost'],
           'ts' => strtotime('now'),
           'lot_id' => $_GET['id']
         ];

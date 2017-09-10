@@ -49,7 +49,7 @@
             <form class="lot-item__form" action="lot.php?id=<?=$_GET['id'];?>" method="post">
               <p class="lot-item__form-item form__item <?php echo in_array('cost', $errors) ? 'form__item--invalid' : '';?>">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="number" name="cost" placeholder="12 000" value="<?=$_POST['cost'];?>">
+                <input id="cost" type="number" name="form[cost]" placeholder="12 000" value="<?=$_POST['form']['cost'];?>">
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
