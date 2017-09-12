@@ -3,14 +3,9 @@
 require_once('functions.php');
 require_once('lotdata.php');
 
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Константин';
-$user_avatar = 'img/user.jpg';
-
-// set default timezone
+session_start();
 date_default_timezone_set('Europe/Moscow');
 
-// ставки пользователей, которыми надо заполнить таблицу
 $bets = [
     ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-20 minute')],
     ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-5 hour')],
@@ -45,11 +40,11 @@ if( isset($_GET['id']) && $lots[$_GET['id']]) {
 // lot page content code
   $page_content = renderTemplate('templates/lot.php', compact('lot', 'bets'));
 
-// final index page code
-  $layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'is_auth', 'user_name', 'user_avatar'));
+// final page code
+  $layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
 
   print($layout_content);
 
 } else {
-  showPageNotFound();
+  goToPageNotFound();
 }

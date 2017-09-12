@@ -257,6 +257,10 @@ h2 {
   color: #727b7f;
 }
 
+.user-menu__log-out {
+  margin-left: 30px;
+}
+
 /* Футер */
 
 .main-footer {
