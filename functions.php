@@ -80,6 +80,26 @@ function goToLoginPage() {
 }
 
 /**
+ * Get relative lot time
+ * @param $ts
+ * @return false|string
+ */
+function getRelativeLotTime($ts) {
+
+  $tsNow = strtotime('now');
+  $tsHourAgo = strtotime('-1 hour');
+  $tsDayAgo = strtotime('-1 day');
+
+  if($ts < $tsDayAgo) {
+    return date('d.m.y H:i', $ts);
+  } else if($ts < $tsHourAgo) {
+    return gmdate('H', $tsNow - $ts).' часов назад';
+  } else {
+    return date('i', $tsNow - $ts).' минут назад';
+  }
+}
+
+/**
  * Checks if passed parameter is numeric
  * @param $value
  * @return mixed

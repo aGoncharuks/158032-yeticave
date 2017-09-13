@@ -1,7 +1,7 @@
 <?php
 
-  require_once('functions.php');
-  require_once('userdata.php');
+  require_once 'functions.php';
+  require_once 'userdata.php';
 
   session_start();
 
@@ -31,28 +31,27 @@
     'custom' => []
   ];
 
+  //handle login form submit
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    foreach ($_POST as $key => $value) {
+    foreach ($_POST['form'] as $key => $value) {
       // required fields validation
-      if (in_array($key, $required) && $value == '') {
+      if (!$_POST['form'][$key] || in_array($key, $required) && $value == '') {
         $errors['required'][] = $key;
       }
-
-      // if form has no errors - check if user exists
-      if (!count($errors['required'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-        if ($user = searchUserByEmail($email, $users)) {
-          if (password_verify($password, $user['password'])) {
-            $_SESSION['user'] = $user;
-            goToMainPage();
-          } else {
-            $errors['custom'][] = 'password';
-          }
+    }
+    // if form has no errors - check if user exists
+    if (!count($errors['required'])) {
+      $email = $_POST['form']['email'];
+      $password = $_POST['form']['password'];
+      if ($user = searchUserByEmail($email, $users)) {
+        if (password_verify($password, $user['password'])) {
+          $_SESSION['user'] = $user;
+          goToMainPage();
         } else {
-          $errors['custom'][] = 'email';
+          $errors['custom'][] = 'password';
         }
+      } else {
+        $errors['custom'][] = 'email';
       }
     }
   }

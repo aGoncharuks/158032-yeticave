@@ -1,7 +1,7 @@
 <?php
 
-require_once('functions.php');
-require_once('lotdata.php');
+require_once 'functions.php';
+require_once 'lotdata.php';
 
 session_start();
 date_default_timezone_set('Europe/Moscow');
