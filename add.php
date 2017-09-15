@@ -11,8 +11,8 @@
   }
 
   $title = 'Добавить лот';
-  $required = ['title', 'category', 'cost', 'image', 'description', 'min_bet', 'end_date'];
-  $rules = ['cost' => 'validateNumber', 'min_bet' => 'validateNumber'];
+  $required = ['title', 'category', 'cost', 'image', 'description', 'step', 'end_date'];
+  $rules = ['cost' => 'validateNumber', 'step' => 'validateNumber'];
   $errors = [];
   $image_mime_types = ['image/png', 'image/jpeg'];
   $info_msg = '';
