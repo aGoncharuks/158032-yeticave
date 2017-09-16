@@ -1,6 +1,6 @@
 <?php
 
-  require_once 'functions.php';
+  require_once 'init.php';
   require_once 'userdata.php';
 
   session_start();
