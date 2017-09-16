@@ -2,7 +2,7 @@ USE yeticave;
 
 -- Существующий список категорий
 INSERT INTO
-	category (name)
+	`category` (name)
 VALUES
 	('Доски и лыжи'),
 	('Крепления'),
@@ -13,7 +13,7 @@ VALUES
 
 -- Существующий список пользователей
 INSERT INTO
-	user (email, name, password_hash, avatar, contacts)
+	`user` (email, name, password_hash, avatar, contacts)
 VALUES
 	('ignat.v@gmail.com', 'Игнат Иванов', 'ug0GdVMi', 'img/avatar.jpg', 'тел. 111111'),
 	('kitty_93@li.ru', 'Китти Петрова', 'daecNazD', 'img/avatar.jpg', 'тел. 222222'),
@@ -21,7 +21,7 @@ VALUES
 
 -- Список объявлений
 INSERT INTO
-	lot (title, category, cost, image, description, step, end_date, favorite, author)
+	`lot` (title, category, cost, image, description, step, end_date, favorite, author)
 VALUES
 	('2014 Rossignol District Snowboard',
 	'1',
@@ -79,7 +79,58 @@ VALUES
 	 1);
 
 INSERT INTO
-	bet (price, lot, author)
+	`bet` (price, lot, author)
 VALUES
 	('11500', '6', '1'),
 	('11000', '6', '2');
+
+-- получить список из всех категорий;
+SELECT *
+FROM `category`;
+
+-- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, количество ставок, название категории;
+SELECT `id`, `title`, `cost`, `image`, `max_bet`, `bet_count`, `category`
+FROM `lot`
+INNER JOIN (
+		SELECT
+			`lot`, MAX(`price`) as `max_bet`, COUNT(`id`) as `bet_count`
+		FROM
+			`bet`
+		GROUP BY `lot`
+		) as `bets`
+	ON
+		bets.lot = `id`
+WHERE
+	`end_date` <  NOW()
+LIMIT
+	2;
+
+
+-- найти лот по его названию или описанию;
+SELECT
+	*
+FROM
+	`lot`
+WHERE
+	`title` LIKE '%сноуборд%'
+OR
+	`description` LIKE '%сноуборд%';
+
+-- обновить название лота по его идентификатору;
+UPDATE
+	`lot`
+SET
+	`title` = '2017 Rossignol District Snowboard'
+WHERE
+	`id` = 1;
+
+-- получить список самых свежих ставок для лота по его идентификатору;
+SELECT
+	*
+FROM
+	`bet`
+WHERE
+	`lot` = 6
+ORDER BY
+	`created_time` DESC
+LIMIT 2;
