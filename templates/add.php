@@ -67,9 +67,9 @@
       <input id="lot-rate" name="form[cost]" placeholder="0" min="1" value="<?=$_POST['form']['cost'];?>">
       <span class="form__error">Обязательное поле, только числовые значения</span>
     </div>
-    <div class="form__item form__item--small <?php echo in_array('min_bet', $errors) ? 'form__item--invalid' : '';?>">
+    <div class="form__item form__item--small <?php echo in_array('step', $errors) ? 'form__item--invalid' : '';?>">
       <label for="lot-step">Шаг ставки</label>
-      <input id="lot-step" name="form[min_bet]" placeholder="0" min="1" value="<?=$_POST['form']['min_bet'];?>">
+      <input id="lot-step" name="form[step]" placeholder="0" min="1" value="<?=$_POST['form']['step'];?>">
       <span class="form__error">Обязательное поле, только числовые значения</span>
     </div>
     <div class="form__item <?php echo in_array('end_date', $errors) ? 'form__item--invalid' : '';?>">

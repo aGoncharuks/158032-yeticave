@@ -8,16 +8,16 @@ $lots = [
     'cost' => '10999',
     'image' => 'img/lot-1.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '10000',
+    'step' => '10000',
     'end_date' => '09.09.2017'
   ],
   [
     'title' => 'DC Ply Mens 2016/2017 Snowboard',
-    'category' => 'Доски и лыжи	',
+    'category' => 'Доски и лыжи',
     'cost' => '159999',
     'image' => 'img/lot-2.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '140000',
+    'step' => '14000',
     'end_date' => '09.09.2017'
   ],
   [
@@ -26,7 +26,7 @@ $lots = [
     'cost' => '8000',
     'image' => 'img/lot-3.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '6000',
+    'step' => '600',
     'end_date' => '09.09.2017'
   ],
   [
@@ -35,7 +35,7 @@ $lots = [
     'cost' => '10999',
     'image' => 'img/lot-4.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '9000',
+    'step' => '900',
     'end_date' => '09.09.2017'
   ],
   [
@@ -44,7 +44,7 @@ $lots = [
     'cost' => '7500',
     'image' => 'img/lot-5.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '6000',
+    'step' => '600',
     'end_date' => '09.09.2017'
   ],
   [
@@ -53,7 +53,7 @@ $lots = [
     'cost' => '5400',
     'image' => 'img/lot-6.jpg',
     'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
-    'min_bet' => '5000',
+    'step' => '500',
     'end_date' => '09.09.2017'
   ]
 ];

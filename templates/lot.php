@@ -42,7 +42,7 @@
               <span class="lot-item__cost"><?=$lot['cost']?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?=$lot['min_bet']?> р</span>
+              Мин. ставка <span><?=$lot['step']?> р</span>
             </div>
           </div>
           <?php if ( !$already_bet ): ?>
