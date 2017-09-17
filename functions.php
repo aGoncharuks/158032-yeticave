@@ -1,5 +1,8 @@
 <?php
 
+require_once 'init.php';
+require_once 'mysql_helper.php';
+
 /**
  * Render template with passed data
  * @param $template_path
@@ -105,5 +108,97 @@ function getRelativeLotTime($ts) {
  * @return mixed
  */
 function validateNumber($value) {
+
   return filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+}
+
+
+/**
+ * Select data from DB
+ * @param $link
+ * @param $sql
+ * @param $data
+ * @return array
+ */
+function selectData($link, $sql, $data) {
+
+  try {
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $resultArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    if(!$resultArr) {
+      return [];
+    }
+
+    return $resultArr;
+  } catch (Exception $e) {
+    return [];
+  }
+}
+
+/**
+ * Insert data in table and get inserted row id
+ * @param $link
+ * @param $table
+ * @param $data
+ * @return bool|int
+ */
+function insertData($link, $table, $data) {
+
+  try {
+    $keys = [];
+    $values = [];
+
+    foreach ($data as $key => $value){
+      $keys[] = $key;
+      $values[] = $value;
+    }
+
+    $columnNameString = join(', ', $keys);
+    $valuePlaceholderString = '';
+
+    $last_key = end(array_keys($keys));
+    foreach ($values as $key => $value) {
+      if ($key !== $last_key) {
+        $valuePlaceholderString.= '?, ';
+      } else {
+        $valuePlaceholderString.= '?';
+      }
+    }
+    $sql = 'INSERT INTO ' . $table. ' ( ' . $columnNameString . ' ) VALUES ( '. $valuePlaceholderString . ' );';
+
+    $stmt = db_get_prepare_stmt($link, $sql, $values);
+    $result = mysqli_stmt_execute($stmt);
+
+    if (!$result) {
+      return false;
+    }
+
+    $lastId = intval(mysqli_insert_id($link));
+
+    return $lastId;
+  } catch (Exception $e) {
+    return false;
+  }
+}
+
+/**
+ * Execute arbitrary sql statement, return true on success and false on fail
+ * @param $link
+ * @param $sql
+ * @param $data
+ * @return bool
+ */
+function executeQuery($link, $sql, $data) {
+
+  try {
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    $result = mysqli_stmt_execute($stmt);
+
+    return $result;
+  } catch (Exception $e) {
+    return false;
+  }
 }
