@@ -1,6 +1,6 @@
 <?php
 
-  require_once 'functions.php';
+  require_once 'init.php';
   require_once 'lotdata.php';
 
   //check if there is no existing bet for this lot

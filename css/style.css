@@ -1235,11 +1235,11 @@ h2 {
 }
 
 .page-not-found {
-  position: absolute;
-  right: 50%;
-  bottom: 50%;
-  transform: translate(50%, 50%);
-}
+   position: absolute;
+   right: 50%;
+   bottom: 50%;
+   transform: translate(50%, 50%);
+ }
 
 .page-not-found__text {
   font-size: 40px;
