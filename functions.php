@@ -102,6 +102,50 @@ function getRelativeLotTime($ts) {
   }
 }
 
+function getLotRemainingTime($end_time) {
+  $now = strtotime('now');
+  $timeDiff = $end_time - $now;
+
+  return secondsToTime($timeDiff);
+}
+
+/**
+ * Convert number of seconds into hours and minutes
+ * @param $inputSeconds
+ * @return string
+ */
+function secondsToTime($inputSeconds) {
+
+  $result = '';
+
+  $secondsInAMinute = 60;
+  $secondsInAnHour  = 60 * $secondsInAMinute;
+  $secondsInADay    = 24 * $secondsInAnHour;
+
+  // extract days
+  $days = floor($inputSeconds / $secondsInADay);
+
+  // extract hours
+  $hourSeconds = $inputSeconds % $secondsInADay;
+  $hours = floor($hourSeconds / $secondsInAnHour);
+
+  // extract minutes
+  $minuteSeconds = $hourSeconds % $secondsInAnHour;
+  $minutes = floor($minuteSeconds / $secondsInAMinute);
+
+  if($days) {
+    $result.= "{$days} дней, ";
+  }
+
+  if($hours) {
+    $result.= "{$hours} часов, ";
+  }
+
+  $result.= "{$minutes} минут";
+
+  return $result;
+}
+
 /**
  * Checks if passed parameter is numeric
  * @param $value
@@ -120,7 +164,7 @@ function validateNumber($value) {
  * @param $data
  * @return array
  */
-function selectData($link, $sql, $data) {
+function selectData($link, $sql, $data  = []) {
 
   try {
     $stmt = db_get_prepare_stmt($link, $sql, $data);
@@ -159,14 +203,12 @@ function insertData($link, $table, $data) {
     $columnNameString = join(', ', $keys);
     $valuePlaceholderString = '';
 
-    $last_key = end(array_keys($keys));
-    foreach ($values as $key => $value) {
-      if ($key !== $last_key) {
-        $valuePlaceholderString.= '?, ';
-      } else {
-        $valuePlaceholderString.= '?';
-      }
+    foreach ($values as $value) {
+      $valuePlaceholderString.= '?, ';
     }
+
+    $valuePlaceholderString = rtrim($valuePlaceholderString, ', ');
+
     $sql = 'INSERT INTO ' . $table. ' ( ' . $columnNameString . ' ) VALUES ( '. $valuePlaceholderString . ' );';
 
     $stmt = db_get_prepare_stmt($link, $sql, $values);
@@ -191,7 +233,7 @@ function insertData($link, $table, $data) {
  * @param $data
  * @return bool
  */
-function executeQuery($link, $sql, $data) {
+function executeQuery($link, $sql, $data = []) {
 
   try {
     $stmt = db_get_prepare_stmt($link, $sql, $data);
@@ -201,4 +243,22 @@ function executeQuery($link, $sql, $data) {
   } catch (Exception $e) {
     return false;
   }
+}
+
+
+/**
+ * Get categories list, that should be loaded for displaying in header and footer on every page
+ * @param $link
+ * @return array
+ */
+function getCategoriesList($link) {
+
+  $sql = "
+    SELECT 
+      *
+    FROM `category`;
+  ";
+
+  $categories = selectData($link, $sql);
+  return $categories;
 }

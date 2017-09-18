@@ -982,7 +982,8 @@ h2 {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
-  width: 80px;
+  width: auto;
+  max-width: 200px;
   margin-bottom: 19px;
   box-sizing: border-box;
 }
@@ -1194,12 +1195,10 @@ h2 {
 }
 
 .rates__timer .timer {
-  width: 82px;
   box-sizing: border-box;
 }
 
 .rates__timer .timer--win {
-  width: 112px;
   box-sizing: border-box;
 }
 

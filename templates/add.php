@@ -1,25 +1,3 @@
-<nav class="nav">
-  <ul class="nav__list container">
-    <li class="nav__item">
-      <a href="all-lots.html">Доски и лыжи</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Крепления</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Ботинки</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Одежда</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Инструменты</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Разное</a>
-    </li>
-  </ul>
-</nav>
 <form class="form form--add-lot container <?php echo count($errors) ? 'form--invalid' : '';?>" action="add.php" method="post" enctype="multipart/form-data">
   <h2>Добавление лота</h2>
   <div class="form__container-two">
@@ -31,12 +9,9 @@
     <div class="form__item  <?php echo in_array('category', $errors) ? 'form__item--invalid' : '';?>">
       <label for="category">Категория</label>
       <select id="category" name="form[category]" value="<?=$_POST['form']['category'];?>">
-        <option>Доски и лыжи</option>
-        <option>Крепления</option>
-        <option>Ботинки</option>
-        <option>Одежда</option>
-        <option>Инструменты</option>
-        <option>Разное</option>
+        <?php foreach ($categories as $category): ?>
+          <option value="<?= $category['id']; ?>"><?= $category['name']; ?></option>
+        <?php endforeach; ?>
       </select>
       <span class="form__error">Обязательное поле</span>
     </div>
@@ -74,7 +49,7 @@
     </div>
     <div class="form__item <?php echo in_array('end_date', $errors) ? 'form__item--invalid' : '';?>">
       <label for="lot-date">Дата завершения</label>
-      <input class="form__input-date" id="lot-date" type="text" name="form[end_date]" placeholder="20.05.2017" value="<?=$_POST['form']['end_date'];?>">
+      <input class="form__input-date" id="lot-date" type="text" name="form[end_date]" placeholder="2017.09.14" value="<?=$_POST['form']['end_date'];?>">
       <span class="form__error">Обязательное поле</span>
     </div>
   </div>
