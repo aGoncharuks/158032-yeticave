@@ -4,31 +4,6 @@
 
   session_start();
 
-/**
- * Search user in DB by email, return null if not found
- * @param $link
- * @param $email
- * @return array|null
- */
-  function searchUserByEmail($link, $email)
-  {
-    $result = null;
-    $sql = "
-      SELECT *
-      FROM 
-        `user` 
-      WHERE
-        `email` = ?;
-    ";
-    $result = selectData($link, $sql, [ $email ]);
-
-    if(count($result)) {
-      $result = $result[0];
-    }
-
-    return $result;
-  }
-
   // if already logged in - redirect to main page
   if($_SESSION['user']) {
     goToMainPage();

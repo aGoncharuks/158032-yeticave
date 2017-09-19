@@ -18,7 +18,7 @@
     <?php elseif ( in_array('password', $errors['custom']) ): ?>
       <span class="form__error">Вы ввели неверный пароль</span>
     <?php endif; ?>    </div>
-  <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
+<!--  <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>-->
   <button type="submit" class="button">Войти</button>
 </form>
 

@@ -12,7 +12,7 @@
   $categories = getCategoriesList($link);
 
   $title = 'Добавить лот';
-  $required = ['title', 'category', 'cost', 'image', 'description', 'step', 'end_date'];
+  $required = ['title', 'category', 'cost', 'description', 'step', 'end_date'];
   $rules = ['cost' => 'validateNumber', 'step' => 'validateNumber'];
   $errors = [];
   $image_mime_types = ['image/png', 'image/jpeg'];
@@ -68,6 +68,7 @@
 
     //if new image was uploaded on last submit - take it, else take previously saved in session one
       $imageFileName = (isset($_FILES['image']) && !$_FILES['image']['error']) ?  $_FILES['image']['name'] : $_SESSION['image']['name'];
+      unset($_SESSION['image']);
 
       $newLot['image'] = "img/{$imageFileName}";
       $newLot['author'] = $_SESSION['user']['id'];

@@ -156,6 +156,15 @@ function validateNumber($value) {
   return filter_var($value, FILTER_SANITIZE_NUMBER_INT);
 }
 
+/**
+ * Checks if passed parameter is email
+ * @param $value
+ * @return mixed
+ */
+function validateEmail($value) {
+
+  return filter_var($value, FILTER_VALIDATE_EMAIL);
+}
 
 /**
  * Select data from DB
@@ -192,13 +201,8 @@ function selectData($link, $sql, $data  = []) {
 function insertData($link, $table, $data) {
 
   try {
-    $keys = [];
-    $values = [];
-
-    foreach ($data as $key => $value){
-      $keys[] = $key;
-      $values[] = $value;
-    }
+    $keys = array_keys($data);
+    $values = array_values($data);
 
     $columnNameString = join(', ', $keys);
     $valuePlaceholderString = '';
@@ -261,4 +265,38 @@ function getCategoriesList($link) {
 
   $categories = selectData($link, $sql);
   return $categories;
+}
+
+/**
+ * Search user in DB by email, return null if not found
+ * @param $link
+ * @param $email
+ * @return array|null
+ */
+function searchUserByEmail($link, $email)
+{
+  $result = null;
+  $sql = "
+      SELECT *
+      FROM 
+        `user` 
+      WHERE
+        `email` = ?;
+    ";
+  $result = selectData($link, $sql, [ $email ]);
+
+  if(count($result)) {
+    $result = $result[0];
+  }
+
+  return $result;
+}
+
+/**
+ * Check if password length is at least 6 symbols
+ * @param $password
+ * @return bool
+ */
+function checkPasswordLength($password) {
+  return strlen($password) >= 6;
 }

@@ -89,7 +89,7 @@ SELECT *
 FROM `category`;
 
 -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, количество ставок, название категории;
-SELECT `id`, `title`, `cost`, `image`, `max_bet`, `bet_count`, `category`
+SELECT lot.id, lot.title, lot.cost, lot.image, bets.max_bet, bets.bet_count, lot.category
 FROM `lot`
 LEFT JOIN (
 		SELECT
