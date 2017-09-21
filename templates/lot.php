@@ -17,7 +17,7 @@
           <div class="lot-item__cost-state">
             <div class="lot-item__rate">
               <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?=$lot['cost']?></span>
+              <span class="lot-item__cost"><?=getLotMaxPrice($lot, $bets)?></span>
             </div>
             <div class="lot-item__min-cost">
               Мин. ставка <span><?=$lot['step']?> р</span>

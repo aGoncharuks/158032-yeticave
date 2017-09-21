@@ -151,9 +151,9 @@ function secondsToTime($inputSeconds) {
  * @param $value
  * @return mixed
  */
-function validateNumber($value) {
+function validatePositiveNumber($value) {
 
-  return filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+  return filter_var($value, FILTER_SANITIZE_NUMBER_INT) && $value > 0;
 }
 
 /**

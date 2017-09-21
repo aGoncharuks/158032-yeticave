@@ -4,6 +4,7 @@
 
   //check if there is no existing bet for this lot
   function checkIfAlreadyBet($bets) {
+
     $result = false;
     foreach ($bets as $bet) {
       if ($bet['lot_id'] === $_GET['id']) {
@@ -14,11 +15,24 @@
     return $result;
   }
 
+  //return max bet price or(if no bets) - lot initial cost
+  function getLotMaxPrice($lot, $bets) {
+
+    $result = intval($lot['cost']);
+    foreach ($bets as $bet) {
+      if (intval($bet['price']) > intval($result)) {
+        $result = intval($bet['price']);
+      }
+    }
+    return $result;
+  }
+
   session_start();
   date_default_timezone_set('Europe/Moscow');
   ob_start();
 
   $categories = getCategoriesList($link);
+  $bets = [];
   $my_bets = [];
   $already_bet = false;
 
@@ -29,7 +43,7 @@
   }
 
   $required = ['price'];
-  $rules = ['price' => 'validateNumber'];
+  $rules = ['price' => 'validatePositiveNumber'];
 
   $errors = [];
 

@@ -13,7 +13,7 @@
 
   $title = 'Добавить лот';
   $required = ['title', 'category', 'cost', 'description', 'step', 'end_date'];
-  $rules = ['cost' => 'validateNumber', 'step' => 'validateNumber'];
+  $rules = ['cost' => 'validatePositiveNumber', 'step' => 'validatePositiveNumber'];
   $errors = [];
   $image_mime_types = ['image/png', 'image/jpeg'];
   $info_msg = '';
