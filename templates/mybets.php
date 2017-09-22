@@ -1,25 +1,3 @@
-<nav class="nav">
-  <ul class="nav__list container">
-    <li class="nav__item">
-      <a href="all-lots.html">Доски и лыжи</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Крепления</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Ботинки</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Одежда</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Инструменты</a>
-    </li>
-    <li class="nav__item">
-      <a href="all-lots.html">Разное</a>
-    </li>
-  </ul>
-</nav>
 <section class="rates container">
   <h2>Мои ставки</h2>
   <table class="rates__list">
@@ -27,21 +5,21 @@
     <tr class="rates__item">
       <td class="rates__info">
         <div class="rates__img">
-          <img src="../img/rate<?=intval($bet['lot_id']) + 1?>.jpg" width="54" height="40" alt="Сноуборд">
+          <img src="<?=$bet['lot_image']?>" width="54" height="40" alt="Фото лота">
         </div>
-        <h3 class="rates__title"><a href="lot/<?=$bet['lot_id']?>.php"><?=htmlspecialchars($lots[$bet['lot_id']]['title'])?></a></h3>
+        <h3 class="rates__title"><a href="lot.php?id=<?=$bet['lot']?>.php"><?=htmlspecialchars($bet['lot_title'])?></a></h3>
       </td>
       <td class="rates__category">
-        <?=$lots[$bet['lot_id']]['category']?>
+        <?=$bet['lot_category']?>
       </td>
       <td class="rates__timer">
-        <div class="timer timer--finishing"><?=$lot_time_remaining;?></div>
+        <div class="timer timer--finishing <?php echo $bet['winner'] === $user['id'] ? 'timer--win' : '';?>"><?=getLotRemainingTime($bet['lot_end_date']);?></div>
       </td>
       <td class="rates__price">
-        <?=$bet['cost']?>
+        <?=$bet['price']?>
       </td>
       <td class="rates__time">
-        <?=getRelativeLotTime($bet['ts'])?>
+        <?=getRelativeLotTime($bet['created_time'])?>
       </td>
     </tr>
     <?php endforeach;?>

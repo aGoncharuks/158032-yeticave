@@ -1,33 +1,42 @@
 <?php
 
 require_once 'init.php';
-require_once 'lotdata.php';
 
 session_start();
 
 // if not logged in - redirect to login page
 if(!$_SESSION['user']) {
   goToLoginPage();
+} else {
+  $user = $_SESSION['user'];
 }
 
+$categories = getCategoriesList($link);
 $title = 'Мои ставки';
-$my_bets = [];
-
-$lot_time_remaining = "00:00";
-$tomorrow = strtotime('tomorrow midnight');
-$now = strtotime('now');
-$lot_time_remaining = gmdate( 'H:i', $tomorrow - $now );
-
 
 // get user's bets
-if($_SESSION['my_bets']) {
-  $my_bets = json_decode($_SESSION['my_bets'], true);
-}
+$sql = "
+      SELECT bet.id, bet.lot, bet.price, UNIX_TIMESTAMP(bet.created_time) as `created_time`, lot.title as `lot_title`, lot.image as `lot_image`, UNIX_TIMESTAMP(lot.end_date) as `lot_end_date`, lot.winner, category.name as `lot_category`
+      FROM 
+        `bet`
+      INNER JOIN 
+        `lot` 
+      ON 
+        lot.id = bet.lot
+      LEFT JOIN 
+        category
+      ON 
+        category.id = lot.category
+      WHERE
+        bet.author = ?;
+    ";
+
+$my_bets = selectData($link, $sql, [ $user['id'] ]);
 
 // lot page content code
 $page_content = renderTemplate('templates/mybets.php', compact('my_bets', 'lots', 'lot_time_remaining'));
 
 // final page code
-$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'categories'));
 
 print($layout_content);

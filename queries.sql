@@ -15,9 +15,9 @@ VALUES
 INSERT INTO
 	`user` (email, name, password_hash, avatar, contacts)
 VALUES
-	('ignat.v@gmail.com', 'Игнат Иванов', 'ug0GdVMi', 'img/avatar.jpg', 'тел. 111111'),
-	('kitty_93@li.ru', 'Китти Петрова', 'daecNazD', 'img/avatar.jpg', 'тел. 222222'),
-	('warrior07@mail.ru', 'Ворриор Сидоров', 'oixb3aL8', 'img/avatar.jpg', 'тел. 333333');
+	('ignat.v@gmail.com', 'Игнат Владимиров', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', 'img/avatar.jpg', 'тел. 111111'),
+	('kitty_93@li.ru', 'Китти Петрова', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', 'img/avatar.jpg', 'тел. 222222'),
+	('warrior07@mail.ru', 'Ворриор Сидоров', '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', 'img/avatar.jpg', 'тел. 333333');
 
 -- Список объявлений
 INSERT INTO
@@ -29,7 +29,7 @@ VALUES
 	'img/lot-1.jpg',
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	'10000',
-	'09.09.2017',
+	'2017.09.30',
 	2,
 	1),
 	('DC Ply Mens 2016/2017 Snowboard',
@@ -38,7 +38,7 @@ VALUES
 	'img/lot-2.jpg',
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	'14000',
-	'09.09.2017',
+	'2017.09.30',
 	2,
 	1),
 	('Крепления Union Contact Pro 2015 года размер L/XL',
@@ -47,7 +47,7 @@ VALUES
 	 'img/lot-3.jpg',
 	 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	 '600',
-	 '09.09.2017',
+	 '2017.09.30',
 	 3,
 	 2),
 	('Ботинки для сноуборда DC Mutiny Charocal',
@@ -56,7 +56,7 @@ VALUES
 	 'img/lot-4.jpg',
 	 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	 '900',
-	 '09.09.2017',
+	 '2017.09.30',
 	 1,
 	 2),
 	('Куртка для сноуборда DC Mutiny Charocal',
@@ -65,7 +65,7 @@ VALUES
 	 'img/lot-5.jpg',
 	 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	 '600',
-	 '09.09.2017',
+	 '2017.09.30',
 	 4,
 	 6),
 	('Маска Oakley Canopy',
@@ -74,7 +74,7 @@ VALUES
 	 'img/lot-6.jpg',
 	 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida tempor augue, sed laoreet velit gravida nec. Fusce nibh lorem, tempor nec diam non, sollicitudin tincidunt neque. Mauris et purus viverra, accumsan dolor vel, cursus dolor. Quisque sollicitudin, leo non ullamcorper blandit, magna magna mollis eros, nec sollicitudin lacus dui.',
 	 '500',
-	 '09.09.2017',
+	 '2017.09.30',
 	 2,
 	 1);
 
@@ -89,9 +89,9 @@ SELECT *
 FROM `category`;
 
 -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, количество ставок, название категории;
-SELECT `id`, `title`, `cost`, `image`, `max_bet`, `bet_count`, `category`
+SELECT lot.id, lot.title, lot.cost, lot.image, bets.max_bet, bets.bet_count, lot.category
 FROM `lot`
-INNER JOIN (
+LEFT JOIN (
 		SELECT
 			`lot`, MAX(`price`) as `max_bet`, COUNT(`id`) as `bet_count`
 		FROM
@@ -99,11 +99,11 @@ INNER JOIN (
 		GROUP BY `lot`
 		) as `bets`
 	ON
-		bets.lot = `id`
+		bets.lot = lot.id
 WHERE
-	`end_date` <  NOW()
+	`end_date` >  NOW()
 LIMIT
-	2;
+	6;
 
 
 -- найти лот по его названию или описанию;

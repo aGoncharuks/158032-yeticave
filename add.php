@@ -1,7 +1,6 @@
 <?php
 
   require_once 'init.php';
-  require_once 'lotdata.php';
 
   session_start();
 
@@ -10,9 +9,11 @@
     goToLoginPage();
   }
 
+  $categories = getCategoriesList($link);
+
   $title = 'Добавить лот';
-  $required = ['title', 'category', 'cost', 'image', 'description', 'step', 'end_date'];
-  $rules = ['cost' => 'validateNumber', 'step' => 'validateNumber'];
+  $required = ['title', 'category', 'cost', 'description', 'step', 'end_date'];
+  $rules = ['cost' => 'validatePositiveNumber', 'step' => 'validatePositiveNumber'];
   $errors = [];
   $image_mime_types = ['image/png', 'image/jpeg'];
   $info_msg = '';
@@ -61,23 +62,31 @@
       $errors[] = 'image';
     }
 
-    // if no errors - redirect to lot page
+    // if no errors - save lot in DB and redirect to lot page
     if (!count($errors)) {
+      $newLot = $_POST['form'];
 
+    //if new image was uploaded on last submit - take it, else take previously saved in session one
+      $imageFileName = (isset($_FILES['image']) && !$_FILES['image']['error']) ?  $_FILES['image']['name'] : $_SESSION['image']['name'];
       unset($_SESSION['image']);
 
-      // @todo save new lot data in database here
+      $newLot['image'] = "img/{$imageFileName}";
+      $newLot['author'] = $_SESSION['user']['id'];
 
-      $new_lot_index = count($lots) + 1;
-      header("Location: lot.php?id=$new_lot_index");
+      $newLotIndex = insertData($link, 'lot', $newLot);
+      if($newLotIndex) {
+        header("Location: lot.php?id=$newLotIndex");
+      } else {
+        $info_msg = 'Ошибка при добавлении лота, пожалуйста свяжитесь с нашим техническим отделом';
+      }
     }
   }
 
 // lot page content code
-$page_content = renderTemplate('templates/add.php', compact('errors', 'info_msg'));
+$page_content = renderTemplate('templates/add.php', compact('errors', 'info_msg', 'categories'));
 
 // final page code
-$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'categories'));
 
 print($layout_content);
 

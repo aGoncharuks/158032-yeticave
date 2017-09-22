@@ -1,28 +1,15 @@
 <?php
 
   require_once 'init.php';
-  require_once 'userdata.php';
 
   session_start();
-
-  function searchUserByEmail($email, $users)
-  {
-    $result = null;
-    foreach ($users as $user) {
-      if ($user['email'] === $email) {
-        $result = $user;
-        break;
-      }
-    }
-    return $result;
-  }
-
 
   // if already logged in - redirect to main page
   if($_SESSION['user']) {
     goToMainPage();
   }
 
+  $categories = getCategoriesList($link);
   $title = 'Логин';
 
   $required = ['email', 'password'];
@@ -43,8 +30,8 @@
     if (!count($errors['required'])) {
       $email = $_POST['form']['email'];
       $password = $_POST['form']['password'];
-      if ($user = searchUserByEmail($email, $users)) {
-        if (password_verify($password, $user['password'])) {
+      if ($user = searchUserByEmail($link, $email)) {
+        if (password_verify($password, $user['password_hash'])) {
           $_SESSION['user'] = $user;
           goToMainPage();
         } else {
@@ -60,7 +47,7 @@
 $page_content = renderTemplate('templates/login.php', compact('errors'));
 
 // final page code
-$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title'));
+$layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'categories'));
 
 print($layout_content);
 
