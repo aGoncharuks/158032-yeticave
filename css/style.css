@@ -632,6 +632,10 @@ h2 {
   align-self: flex-end;
 }
 
+.lot__timer.lot__timer--card {
+  max-width: 100px;
+}
+
 .timer {
   position: relative;
   padding: 6px 8px 5px 25px;
