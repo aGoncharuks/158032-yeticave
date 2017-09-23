@@ -1,6 +1,12 @@
 {
-    "name": "yeticave",
-    "description": "Личный проект «YetiCave» от HTML Academy",
+    "name": "alexander/yeticave",
+    "description": "Auction web app",
     "type": "project",
+    "authors": [
+        {
+            "name": "Alexander",
+            "email": "aleksandrs.goncaruks@gmail.com"
+        }
+    ],
     "require": {}
 }
