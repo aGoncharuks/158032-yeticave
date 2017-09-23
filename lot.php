@@ -28,7 +28,6 @@
   }
 
   session_start();
-  date_default_timezone_set('Europe/Moscow');
   ob_start();
 
   $categories = getCategoriesList($link);
@@ -50,7 +49,7 @@
   if( isset($_GET['id']) ) {
 
     $lotSql = "
-      SELECT lot.id, lot.title, lot.cost, lot.image, lot.step, UNIX_TIMESTAMP(lot.end_date) as 'end_date', bets.max_bet, bets.bet_count, category.name as `category`
+      SELECT lot.id, lot.title, lot.cost, lot.image, lot.step, lot.description, UNIX_TIMESTAMP(lot.end_date) as 'end_date', bets.max_bet, bets.bet_count, category.name as `category`
       FROM `lot`
       LEFT JOIN (
               SELECT
