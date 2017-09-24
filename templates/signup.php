@@ -45,7 +45,7 @@
         <span>+ Добавить</span>
       </label>
     </div>
-    <span class="form__error">Обязательное поле, тип файла должен быть одним из: JPEG, PNG</span>
+    <span class="form__error">Тип файла должен быть одним из: JPEG, PNG</span>
   </div>
   <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
   <?php if ($info_msg): ?>

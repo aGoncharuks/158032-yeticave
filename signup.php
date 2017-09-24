@@ -55,9 +55,6 @@
         $_SESSION['image'] = $_FILES['image'];
       }
     }
-    else if(!$_SESSION['image']){
-      $errors['custom'][] = 'image';
-    }
     if(!count($errors['required']) && !count($errors['custom'])) {
 
       //check user with this this email already exists

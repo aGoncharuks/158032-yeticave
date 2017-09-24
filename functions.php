@@ -146,6 +146,7 @@ function secondsToTime($inputSeconds) {
   return $result;
 }
 
+
 /**
  * Checks if passed parameter is numeric
  * @param $value

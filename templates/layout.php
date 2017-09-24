@@ -23,7 +23,7 @@
         <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
         <a class="main-header__add-lot button" href="mybets.php">Мои ставки</a>
         <div class="user-menu__image">
-          <img src="<?=$_SESSION['user']['avatar'];?>" width="40" height="40" alt="Пользователь">
+          <img src="<?=$_SESSION['user']['avatar'];?>" width="40" height="40" alt="&nbsp">
         </div>
         <div class="user-menu__logged">
           <p><?=$_SESSION['user']['name'];?></p>
