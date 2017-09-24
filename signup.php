@@ -59,7 +59,7 @@
 
       //check user with this this email already exists
       if (searchUserByEmail($link, $_POST['form']['email'])) {
-        $errors[]['custom'] = 'email_used';
+        $errors['custom'][] = 'email_used';
       }
       // if no errors - save user in DB and redirect to login page
       else {
@@ -92,5 +92,4 @@ $page_content = renderTemplate('templates/signup.php', compact('errors', 'info_m
 $layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'categories'));
 
 print($layout_content);
-
 

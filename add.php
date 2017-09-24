@@ -72,7 +72,6 @@
 
       $newLot['image'] = "img/{$imageFileName}";
       $newLot['author'] = $_SESSION['user']['id'];
-      $newLot['end_date'] = date_create_from_format($newLot['end_date']);
 
       $newLotIndex = insertData($link, 'lot', $newLot);
       if($newLotIndex) {

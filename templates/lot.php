@@ -7,6 +7,7 @@
       </div>
       <p class="lot-item__category">Категория: <span><?=$lot['category']?></span></p>
       <p class="lot-item__description"><?=$lot['description']?></p>
+      <p class="lot-item__category">Контакты: <span><?=$lot['contacts']?></span></p>
     </div>
     <div class="lot-item__right">
       <?php if ($_SESSION['user']): ?>
@@ -20,7 +21,7 @@
               <span class="lot-item__cost"><?=getLotMaxPrice($lot, $bets)?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?=$lot['step']?> р</span>
+              Мин. шаг ставки: <span><?=$lot['step']?> р</span>
             </div>
           </div>
           <?php if ( !$already_bet ): ?>

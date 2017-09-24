@@ -1,7 +1,7 @@
 <form class="form container <?php echo count($errors['required']) || count($errors['custom']) ? 'form--invalid' : '';?>" action="signup.php" method="post" enctype="multipart/form-data">
   <h2>Регистрация нового аккаунта</h2>
   <div class="form__item <?php echo in_array('email', $errors['required']) ||
-  in_array('email', $errors['custom']) ? 'form__item--invalid' : '';?>">
+  in_array('email', $errors['custom'])  || in_array('email_used', $errors['custom'])? 'form__item--invalid' : '';?>">
     <label for="email">E-mail*</label>
     <input id="email" type="text" name="form[email]" placeholder="Введите e-mail" value="<?=$_POST['form']['email'];?>">
     <?php if ( in_array('email', $errors['required']) ): ?>
