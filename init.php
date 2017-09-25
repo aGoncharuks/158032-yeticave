@@ -1,5 +1,8 @@
 <?php
+require_once 'vendor/autoload.php';
 require_once 'functions.php';
+
+date_default_timezone_set('Europe/Moscow');
 
 $link = mysqli_connect("localhost", "root", "", "yeticave");
 if (!$link) {

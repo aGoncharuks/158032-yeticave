@@ -49,7 +49,7 @@
     </div>
     <div class="form__item <?php echo in_array('end_date', $errors) ? 'form__item--invalid' : '';?>">
       <label for="lot-date">Дата завершения</label>
-      <input class="form__input-date" id="lot-date" type="text" name="form[end_date]" placeholder="гггг.мм.дд" value="<?=$_POST['form']['end_date'];?>">
+      <input class="form__input-date" id="lot-date" type="date" name="form[end_date]" placeholder="гггг.мм.дд" value="<?=$_POST['form']['end_date'];?>">
       <span class="form__error">Обязательное поле</span>
     </div>
   </div>
