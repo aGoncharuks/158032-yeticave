@@ -4,7 +4,7 @@
  * Get bets for particular lot
  * @param $link
  * @param $params
- * @return array
+ * @return arraygit
  */
 function getLotBets($link, $params) {
 
