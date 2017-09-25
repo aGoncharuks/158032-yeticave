@@ -8,6 +8,7 @@
           <img src="<?=$bet['lot_image']?>" width="54" height="40" alt="Фото лота">
         </div>
         <h3 class="rates__title"><a href="lot.php?id=<?=$bet['lot']?>.php"><?=htmlspecialchars($bet['lot_title'])?></a></h3>
+        <p class="rates__contacts"><?=htmlspecialchars($bet['contacts'])?></p>
       </td>
       <td class="rates__category">
         <?=$bet['lot_category']?>
@@ -19,7 +20,7 @@
         <?=$bet['price']?>
       </td>
       <td class="rates__time">
-        <?=getRelativeLotTime($bet['created_time'])?>
+        <?=getRelativeTime($bet['created_time'])?>
       </td>
     </tr>
     <?php endforeach;?>

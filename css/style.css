@@ -1187,6 +1187,10 @@ h2 {
   color: #2590c6;
 }
 
+.rates__info .rates__contacts{
+  margin-left: 20px;
+}
+
 .rates__category {
   width: 160px;
   font-size: 13px;

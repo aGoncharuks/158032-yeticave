@@ -6,6 +6,7 @@ session_start();
 
 $title = 'Результаты поиска';
 $categories = getCategoriesList($link);
+$searchTerm = '';
 
 //if search term is not set => redirect to main page
 if(!isset($_GET['search_term'])) {

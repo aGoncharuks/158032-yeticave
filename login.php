@@ -5,7 +5,7 @@
   session_start();
 
   // if already logged in - redirect to main page
-  if($_SESSION['user']) {
+  if(isset($_SESSION['user'])) {
     goToMainPage();
   }
 

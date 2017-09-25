@@ -20,7 +20,8 @@ CREATE TABLE `lot` (
 	`author` INT(10) UNSIGNED NOT NULL,
 	`winner` INT(10) UNSIGNED NULL DEFAULT NULL,
 	`category` SMALLINT UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`author`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 CREATE INDEX title ON lot(title);
 CREATE INDEX description ON lot(description);
@@ -31,7 +32,9 @@ CREATE TABLE `bet` (
 	`created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`lot` INT(10) UNSIGNED NOT NULL,
 	`author` INT(10) UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`lot`) REFERENCES `lot`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`author`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `user` (

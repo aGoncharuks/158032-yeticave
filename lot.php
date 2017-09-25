@@ -34,9 +34,10 @@
   $bets = [];
   $my_bets = [];
   $already_bet = false;
+  $title = '';
 
   // get user's bets and check if user already made bet for this lot
-  if($_SESSION['my_bets']) {
+  if( isset($_SESSION['my_bets']) ) {
     $my_bets = json_decode($_SESSION['my_bets'], true);
     $already_bet = checkIfAlreadyBet($my_bets);
   }
@@ -49,8 +50,12 @@
   if( isset($_GET['id']) ) {
 
     $lotSql = "
-      SELECT lot.id, lot.title, lot.cost, lot.image, lot.step, lot.description, UNIX_TIMESTAMP(lot.end_date) as 'end_date', bets.max_bet, bets.bet_count, category.name as `category`
+      SELECT lot.id, lot.title, lot.cost, lot.image, lot.step, lot.description, UNIX_TIMESTAMP(lot.end_date) as 'end_date', bets.max_bet, bets.bet_count, category.name as `category`, user.contacts as `contacts`
       FROM `lot`
+      INNER JOIN
+        `user`
+      ON 
+        `user`.`id` = `lot`.`author`
       LEFT JOIN (
               SELECT
                   `lot`, MAX(`price`) as `max_bet`, COUNT(`id`) as `bet_count`
@@ -86,7 +91,9 @@
         `user`
       ON user.id = bet.author
       WHERE
-        lot = ?;
+        lot = ?
+      ORDER BY 
+        bet.created_time DESC
     ";
 
     $bets = selectData($link, $betsSql, [ $_GET['id'] ]);

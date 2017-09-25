@@ -34,9 +34,11 @@ foreach ($lotsWithoutWinner as $lot) {
     LIMIT 1  
   ";
 
-  $lastBet = selectData($link, $lastBetSql, [ $lot['id'] ])[0];
+  $result = selectData($link, $lastBetSql, [ $lot['id'] ]);
 
-  if($lastBet) {
+  if($result) {
+    $lastBet = $result[0];
+
     $winnerInsertSql = "
       UPDATE 
         `lot`
