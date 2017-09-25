@@ -1188,7 +1188,12 @@ h2 {
 }
 
 .rates__info .rates__contacts{
+  display: none;
   margin-left: 20px;
+}
+
+.rates__info .rates__contacts.rates-contacts--won {
+  display: block;
 }
 
 .rates__category {

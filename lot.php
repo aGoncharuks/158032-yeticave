@@ -1,6 +1,8 @@
 <?php
 
   require_once 'init.php';
+  require_once 'queries/lot.php';
+  require_once 'queries/bet.php';
 
   //check if there is no existing bet for this lot
   function checkIfAlreadyBet($bets) {
@@ -49,31 +51,8 @@
 
   if( isset($_GET['id']) ) {
 
-    $lotSql = "
-      SELECT lot.id, lot.title, lot.cost, lot.image, lot.step, lot.description, UNIX_TIMESTAMP(lot.end_date) as 'end_date', bets.max_bet, bets.bet_count, category.name as `category`, user.contacts as `contacts`
-      FROM `lot`
-      INNER JOIN
-        `user`
-      ON 
-        `user`.`id` = `lot`.`author`
-      LEFT JOIN (
-              SELECT
-                  `lot`, MAX(`price`) as `max_bet`, COUNT(`id`) as `bet_count`
-              FROM
-                  `bet`
-              GROUP BY `lot`
-              ) as `bets`
-          ON
-              bets.lot = lot.id
-        LEFT JOIN 
-          `category`
-        ON
-          category.id = lot.category
-      WHERE
-          lot.id = ?;
-    ";
-
-    $lot = selectData($link, $lotSql, [ $_GET['id'] ])[0];
+    //get lot
+    $lot = getLot($link, [ $_GET['id'] ]);
   } else {
     goToPageNotFound();
   }
@@ -83,20 +62,7 @@
   if( $lot ) {
 
     //get lot bets
-    $betsSql = "
-      SELECT bet.id as `id`, bet.price, user.name as `author`, UNIX_TIMESTAMP(bet.created_time) as `created_time`
-      FROM 
-        `bet`
-      INNER JOIN 
-        `user`
-      ON user.id = bet.author
-      WHERE
-        lot = ?
-      ORDER BY 
-        bet.created_time DESC
-    ";
-
-    $bets = selectData($link, $betsSql, [ $_GET['id'] ]);
+    $bets = getLotBets($link, [ $_GET['id'] ]);
 
     // set page title
     $title = $lot['title'];

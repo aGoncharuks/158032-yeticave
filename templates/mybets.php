@@ -8,13 +8,13 @@
           <img src="<?=$bet['lot_image']?>" width="54" height="40" alt="Фото лота">
         </div>
         <h3 class="rates__title"><a href="lot.php?id=<?=$bet['lot']?>.php"><?=htmlspecialchars($bet['lot_title'])?></a></h3>
-        <p class="rates__contacts"><?=htmlspecialchars($bet['contacts'])?></p>
+        <p class="rates__contacts <?php echo $bet['winner'] === $_SESSION['user']['id'] ? 'rates-contacts--won' : '';?>"><?=htmlspecialchars($bet['contacts'])?></p>
       </td>
       <td class="rates__category">
         <?=$bet['lot_category']?>
       </td>
       <td class="rates__timer">
-        <div class="timer timer--finishing <?php echo $bet['winner'] === $user['id'] ? 'timer--win' : '';?>"><?=getLotRemainingTime($bet['lot_end_date']);?></div>
+        <div class="timer timer--finishing <?php echo $bet['winner'] === $_SESSION['user']['id'] ? 'timer--win' : '';?>"><?=($bet['lot_end_date'] > strtotime('now')) ? getLotRemainingTime($bet['lot_end_date']) : 'Завершен';?></div>
       </td>
       <td class="rates__price">
         <?=$bet['price']?>

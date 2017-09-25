@@ -1,58 +1,23 @@
 <?php
 
 require_once 'init.php';
+require_once 'queries/lot.php';
 
 //get all ended lots with no winner defined yet
-$endedLotsSql = "
-  SELECT
-    *
-  FROM
-    `lot`
-  WHERE
-    `end_date` <=  NOW()
-  AND
-    `winner` IS NULL
-";
-
-$lotsWithoutWinner = selectData($link, $endedLotsSql);
+$lotsWithoutWinner = getLotsWithoutWinner($link);
 
 //get winner for each ended lot that has bets, save winner id in DB and send information email to him
 foreach ($lotsWithoutWinner as $lot) {
-  $lastBetSql = "
-    SELECT
-      `bet`.*, `user`.`name` as `winner_name`, `user`.`email` as `winner_email`
-    FROM
-      `bet`
-    INNER JOIN 
-      `user`
-    ON 
-      `user`.`id` = `bet`.`author` 
-    WHERE
-      `lot` = ?
-    ORDER BY 
-      `price` DESC
-    LIMIT 1  
-  ";
 
-  $result = selectData($link, $lastBetSql, [ $lot['id'] ]);
+  $result = getLastBet($link, [ $lot['id'] ]);
 
   if($result) {
-    $lastBet = $result[0];
+    $lastBet = $result;
 
-    $winnerInsertSql = "
-      UPDATE 
-        `lot`
-      SET 
-        `winner` = ? 
-      WHERE 
-        `id` = ? 
-    ";
-
-    $result = executeQuery($link, $winnerInsertSql, [ $lastBet['author'], $lot['id'] ]);
+    $result = setLotWinner($link, [ $lastBet['author'], $lot['id'] ]);
 
     // if winner successfully saved => send information email on winner's e-mail
     if ($result) {
-
       $mailBody = renderTemplate('templates/email.php', compact('lot', 'lastBet'));
 
       $transport = new Swift_SmtpTransport('smtp.mail.ru', 465, 'ssl');
