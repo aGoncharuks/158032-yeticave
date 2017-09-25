@@ -1,16 +1,16 @@
 <section class="lot-item container">
-  <h2><?=$lot['title']?></h2>
+  <h2><?=htmlspecialchars($lot['title'])?></h2>
   <div class="lot-item__content">
     <div class="lot-item__left">
       <div class="lot-item__image">
         <img src="<?=$lot['image']?>" width="730" height="548" alt="Фото лота">
       </div>
       <p class="lot-item__category">Категория: <span><?=$lot['category']?></span></p>
-      <p class="lot-item__description"><?=$lot['description']?></p>
-      <p class="lot-item__category">Контакты: <span><?=$lot['contacts']?></span></p>
+      <p class="lot-item__description"><?=htmlspecialchars($lot['description'])?></p>
+      <p class="lot-item__category">Контакты: <span><?=htmlspecialchars($lot['contacts'])?></span></p>
     </div>
     <div class="lot-item__right">
-      <?php if ($_SESSION['user']): ?>
+      <?php if( isset($_SESSION['user']) ): ?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
             <?=getLotRemainingTime($lot['end_date']);?>
@@ -43,7 +43,7 @@
               <tr class="history__item">
                 <td class="history__name"><?=$bet['author']?></td>
                 <td class="history__price"><?=$bet['price']?> р</td>
-                <td class="history__time"><?=getRelativeLotTime($bet['created_time'])?></td>
+                <td class="history__time"><?=getRelativeTime($bet['created_time'])?></td>
               </tr>
             <?php endforeach;?>
           </table>

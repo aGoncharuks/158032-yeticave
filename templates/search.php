@@ -1,5 +1,5 @@
 <section class="lots">
-  <h2>Результаты поиска по запросу «<span><?= $searchTerm; ?></span>»</h2>
+  <h2>Результаты поиска по запросу «<span><?= htmlspecialchars($searchTerm); ?></span>»</h2>
   <ul class="lots__list">
     <?php foreach ($lots as $key => $lot): ?>
       <li class="lots__item lot">

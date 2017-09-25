@@ -34,9 +34,10 @@
   $bets = [];
   $my_bets = [];
   $already_bet = false;
+  $title = '';
 
   // get user's bets and check if user already made bet for this lot
-  if($_SESSION['my_bets']) {
+  if( isset($_SESSION['my_bets']) ) {
     $my_bets = json_decode($_SESSION['my_bets'], true);
     $already_bet = checkIfAlreadyBet($my_bets);
   }

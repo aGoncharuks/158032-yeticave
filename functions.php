@@ -83,15 +83,16 @@ function goToLoginPage() {
 }
 
 /**
- * Get relative lot time
+ * Get relative time
  * @param $ts
  * @return false|string
  */
-function getRelativeLotTime($ts) {
+function getRelativeTime($ts) {
 
   $tsNow = strtotime('now');
   $tsHourAgo = strtotime('-1 hour');
   $tsDayAgo = strtotime('-1 day');
+
 
   if($ts < $tsDayAgo) {
     return date('d.m.y H:i', $ts);
@@ -164,11 +165,7 @@ function selectData($link, $sql, $data  = []) {
     $result = mysqli_stmt_get_result($stmt);
     $resultArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if(!$resultArr) {
-      return [];
-    }
-
-    return $resultArr;
+    return $resultArr ?? [];
   } catch (Exception $e) {
     return [];
   }

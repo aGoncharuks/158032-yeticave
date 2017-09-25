@@ -3,7 +3,7 @@
   <div class="form__item <?php echo in_array('email', $errors['required']) ||
   in_array('email', $errors['custom'])  || in_array('email_used', $errors['custom'])? 'form__item--invalid' : '';?>">
     <label for="email">E-mail*</label>
-    <input id="email" type="text" name="form[email]" placeholder="Введите e-mail" value="<?=$_POST['form']['email'];?>">
+    <input id="email" type="text" name="form[email]" placeholder="Введите e-mail" value="<?=$_POST['form']['email'] ?? '';?>">
     <?php if ( in_array('email', $errors['required']) ): ?>
       <span class="form__error">Обязательное поле</span>
     <?php elseif ( in_array('email', $errors['custom']) ): ?>
@@ -15,7 +15,7 @@
   <div class="form__item <?php echo in_array('password', $errors['required']) ||
   in_array('password', $errors['custom']) ? 'form__item--invalid' : '';?>">
     <label for="password">Пароль*</label>
-    <input id="password" type="password" name="form[password]" placeholder="Введите пароль" value="<?=$_POST['form']['password'];?>">
+    <input id="password" type="password" name="form[password]" placeholder="Введите пароль" value="<?=$_POST['form']['password'] ?? '';?>">
     <?php if ( in_array('password', $errors['required']) ): ?>
       <span class="form__error">Обязательное поле</span>
     <?php elseif ( in_array('password', $errors['custom']) ): ?>
@@ -24,12 +24,12 @@
   </div>
   <div class="form__item <?php echo in_array('name', $errors['required']) ? 'form__item--invalid' : '';?>">
     <label for="name">Имя*</label>
-    <input id="name" type="text" name="form[name]" placeholder="Введите имя" value="<?=$_POST['form']['name'];?>">
+    <input id="name" type="text" name="form[name]" placeholder="Введите имя" value="<?=$_POST['form']['name'] ?? '';?>">
     <span class="form__error">Обязательное поле</span>
   </div>
   <div class="form__item <?php echo in_array('contacts', $errors['required']) ? 'form__item--invalid' : '';?>">
     <label for="contacts">Контактные данные*</label>
-    <textarea id="contacts" name="form[contacts]" placeholder="Напишите как с вами связаться"><?=$_POST['form']['contacts'];?></textarea>
+    <textarea id="contacts" name="form[contacts]" placeholder="Напишите как с вами связаться"><?=htmlspecialchars($_POST['form']['contacts'] ?? '');?></textarea>
     <span class="form__error">Обязательное поле</span>
   </div>
   <div class="form__item form__item--file form__item--last <?php echo isset($_SESSION['image']) && !in_array('image', $errors) ? 'form__item--uploaded' : ''; echo in_array('image', $errors['custom']) ? ' form__item--invalid' : '';?>">
