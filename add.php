@@ -28,7 +28,7 @@
       }
 
       // other custom validation
-      if ($rules[$key]) {
+      if (isset($rules[$key])) {
         $result = call_user_func($rules[$key], $value);
         if (!$result) {
           $errors[] = $key;
