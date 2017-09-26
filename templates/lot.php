@@ -13,7 +13,7 @@
       <?php if( isset($_SESSION['user']) ): ?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
-            <?=getLotRemainingTime($lot['end_date']);?>
+            <?=($lot['end_date'] > strtotime('now')) ? getLotRemainingTime($lot['end_date']) : 'Завершен';;?>
           </div>
           <div class="lot-item__cost-state">
             <div class="lot-item__rate">
@@ -24,7 +24,7 @@
               Мин. шаг ставки: <span><?=$lot['step']?> р</span>
             </div>
           </div>
-          <?php if ( !$already_bet ): ?>
+          <?php if ( !$already_bet && ($lot['end_date'] > strtotime('now')) ): ?>
             <form class="lot-item__form flex-wrap <?php echo in_array('price', $errors) ? 'form__item--invalid' : '';?>" action="lot.php?id=<?=$_GET['id'];?>" method="post">
               <p class="lot-item__form-item form__item width_50 <?php echo in_array('price', $errors) ? 'form__item--invalid' : '';?>">
                 <label for="price">Ваша ставка</label>

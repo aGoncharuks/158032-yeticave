@@ -55,6 +55,7 @@
         $_SESSION['image'] = $_FILES['image'];
       }
     }
+
     if(!count($errors['required']) && !count($errors['custom'])) {
 
       //check user with this this email already exists
@@ -81,7 +82,6 @@
           $info_msg = 'Ошибка при сохранении пользователяы, пожалуйста свяжитесь с нашим техническим отделом';
         }
       }
-
     }
   }
 
