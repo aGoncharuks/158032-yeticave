@@ -58,7 +58,7 @@
         $_SESSION['image'] = $_FILES['image'];
       }
     }
-    else if(!$_SESSION['image']){
+    else if(!isset($_SESSION['image'])){
       $errors[] = 'image';
     }
 

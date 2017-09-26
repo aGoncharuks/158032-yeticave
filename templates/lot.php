@@ -25,12 +25,13 @@
             </div>
           </div>
           <?php if ( !$already_bet ): ?>
-            <form class="lot-item__form" action="lot.php?id=<?=$_GET['id'];?>" method="post">
-              <p class="lot-item__form-item form__item <?php echo in_array('price', $errors) ? 'form__item--invalid' : '';?>">
+            <form class="lot-item__form flex-wrap <?php echo in_array('price', $errors) ? 'form__item--invalid' : '';?>" action="lot.php?id=<?=$_GET['id'];?>" method="post">
+              <p class="lot-item__form-item form__item width_50 <?php echo in_array('price', $errors) ? 'form__item--invalid' : '';?>">
                 <label for="price">Ваша ставка</label>
                 <input id="price" type="number" name="form[price]" placeholder="12 000" value="<?=$_POST['form']['price'];?>">
               </p>
-              <button type="submit" class="button">Сделать ставку</button>
+              <button type="submit" class="button width_50">Сделать ставку</button>
+              <span class="form__error width_100">Ставка должна быть больше текущей цены</span>
             </form>
           <?php endif;?>
         </div>

@@ -20,7 +20,7 @@
     foreach ($_POST['form'] as $key => $value) {
 
       // required fields validation
-      if (!$_POST['form'][$key] || in_array($key, $required) && $value == '') {
+      if (!isset($_POST['form'][$key]) || in_array($key, $required) && $value == '') {
         $errors['required'][] = $key;
       }
 

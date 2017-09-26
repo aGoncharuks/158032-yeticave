@@ -86,7 +86,8 @@
       }
 
       //check if new price is bigger than old one + minimal step
-      if(intval($_POST['form']['price']) <= intval($lot['max_bet']) + intval($lot['step'])) {
+      $currentPrice = intval($lot['max_bet']) > intval($lot['cost']) ? intval($lot['max_bet']) : intval($lot['cost']);
+      if(intval($_POST['form']['price']) < $currentPrice + intval($lot['step'])) {
         $errors[] = 'price';
       }
 

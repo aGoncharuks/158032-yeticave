@@ -1257,3 +1257,15 @@ h2 {
   font-size: 40px;
   margin-bottom: 50px;
 }
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.width_50 {
+  width: 50%;
+}
+
+.width_100 {
+  width: 100%;
+}
