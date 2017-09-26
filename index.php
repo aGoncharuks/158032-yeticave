@@ -1,6 +1,8 @@
 <?php
 
 require_once 'init.php';
+require_once 'getwinner.php';
+require_once 'queries/lot.php';
 
 session_start();
 
@@ -14,39 +16,13 @@ $currentPage = $_GET['page'] ?? 1;
 $addPaginationUrl = '/?';
 
 //get lots total count
-$countSql = "
-  SELECT 
-    COUNT(*) as `count` 
-  FROM 
-    `lot`
-  WHERE
-    `lot`.`end_date` >  NOW();
-";
-
-$itemCount = selectData($link, $countSql)[0]['count'];
+$itemCount = getAllLotsCount($link);
 $pageCount = ceil(intval($itemCount) / $itemPerPage);
 $pageOffset = (intval($currentPage) - 1) * $itemPerPage;
 $pages = range(1, $pageCount);
 
 //get lots
-$lotsSql = "
-  SELECT `lot`.`id` as `id`, `title`, `created_time`, UNIX_TIMESTAMP(end_date) as `end_date`, `cost`, `image`, `category`.`name` as `category`
-  FROM 
-    `lot`
-  LEFT JOIN 
-    `category`
-  ON
-    `category`.`id` = `lot`.`category`
-  WHERE
-    `lot`.`end_date` >  NOW()
-  ORDER BY `lot`.`created_time` DESC
-  LIMIT
-    ?
-  OFFSET 
-    ?;
-";
-
-$lots = selectData($link, $lotsSql, [$itemPerPage, $pageOffset]);
+$lots = getAllLots($link, [$itemPerPage, $pageOffset]);
 
 $pagination = renderTemplate('templates/pagination.php', compact('pages', 'pageCount', 'currentPage', 'addPaginationUrl'));
 

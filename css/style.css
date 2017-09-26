@@ -1187,6 +1187,15 @@ h2 {
   color: #2590c6;
 }
 
+.rates__info .rates__contacts{
+  display: none;
+  margin-left: 20px;
+}
+
+.rates__info .rates__contacts.rates-contacts--won {
+  display: block;
+}
+
 .rates__category {
   width: 160px;
   font-size: 13px;
@@ -1247,4 +1256,16 @@ h2 {
 .page-not-found__text {
   font-size: 40px;
   margin-bottom: 50px;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.width_50 {
+  width: 50%;
+}
+
+.width_100 {
+  width: 100%;
 }

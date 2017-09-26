@@ -8,5 +8,7 @@
             "email": "aleksandrs.goncaruks@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
 }

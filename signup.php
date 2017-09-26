@@ -20,12 +20,12 @@
     foreach ($_POST['form'] as $key => $value) {
 
       // required fields validation
-      if (!$_POST['form'][$key] || in_array($key, $required) && $value == '') {
+      if (!isset($_POST['form'][$key]) || in_array($key, $required) && $value == '') {
         $errors['required'][] = $key;
       }
 
       // other custom validation
-      if ($rules[$key]) {
+      if (isset($rules[$key])) {
         $result = call_user_func($rules[$key], $value);
         if (!$result) {
           $errors['custom'][] = $key;
@@ -55,14 +55,12 @@
         $_SESSION['image'] = $_FILES['image'];
       }
     }
-    else if(!$_SESSION['image']){
-      $errors['custom'][] = 'image';
-    }
+
     if(!count($errors['required']) && !count($errors['custom'])) {
 
       //check user with this this email already exists
       if (searchUserByEmail($link, $_POST['form']['email'])) {
-        $errors[]['custom'] = 'email_used';
+        $errors['custom'][] = 'email_used';
       }
       // if no errors - save user in DB and redirect to login page
       else {
@@ -84,7 +82,6 @@
           $info_msg = 'Ошибка при сохранении пользователяы, пожалуйста свяжитесь с нашим техническим отделом';
         }
       }
-
     }
   }
 
@@ -95,5 +92,4 @@ $page_content = renderTemplate('templates/signup.php', compact('errors', 'info_m
 $layout_content = renderTemplate('templates/layout.php', compact('page_content', 'title', 'categories'));
 
 print($layout_content);
-
 

@@ -83,15 +83,16 @@ function goToLoginPage() {
 }
 
 /**
- * Get relative lot time
+ * Get relative time
  * @param $ts
  * @return false|string
  */
-function getRelativeLotTime($ts) {
+function getRelativeTime($ts) {
 
   $tsNow = strtotime('now');
   $tsHourAgo = strtotime('-1 hour');
   $tsDayAgo = strtotime('-1 day');
+
 
   if($ts < $tsDayAgo) {
     return date('d.m.y H:i', $ts);
@@ -102,49 +103,32 @@ function getRelativeLotTime($ts) {
   }
 }
 
-function getLotRemainingTime($end_time) {
-  $now = strtotime('now');
-  $timeDiff = $end_time - $now;
+/**
+ * Returns time remaining to lot closing
+ * @param $endTime
+ * @return string
+ */
+function getLotRemainingTime($endTime) {
 
-  return secondsToTime($timeDiff);
+  $now = strtotime('now');
+  return getTimeDifference($now, $endTime);
 }
 
 /**
- * Convert number of seconds into hours and minutes
- * @param $inputSeconds
+ * Get time difference between two timestamps in readable time difference format
+ * @param $timestamp1
+ * @param $timestamp2
  * @return string
  */
-function secondsToTime($inputSeconds) {
+function getTimeDifference($timestamp1, $timestamp2) {
+  $datetime1 = new DateTime('@'.$timestamp1);
+  $datetime2 = new DateTime('@'.$timestamp2);
 
-  $result = '';
+  $interval = date_diff($datetime1, $datetime2);
 
-  $secondsInAMinute = 60;
-  $secondsInAnHour  = 60 * $secondsInAMinute;
-  $secondsInADay    = 24 * $secondsInAnHour;
-
-  // extract days
-  $days = floor($inputSeconds / $secondsInADay);
-
-  // extract hours
-  $hourSeconds = $inputSeconds % $secondsInADay;
-  $hours = floor($hourSeconds / $secondsInAnHour);
-
-  // extract minutes
-  $minuteSeconds = $hourSeconds % $secondsInAnHour;
-  $minutes = floor($minuteSeconds / $secondsInAMinute);
-
-  if($days) {
-    $result.= "{$days} дней, ";
-  }
-
-  if($hours) {
-    $result.= "{$hours} часов, ";
-  }
-
-  $result.= "{$minutes} минут";
-
-  return $result;
+  return $interval->format('%d дней, %h часов, %i минут');
 }
+
 
 /**
  * Checks if passed parameter is numeric
@@ -181,11 +165,7 @@ function selectData($link, $sql, $data  = []) {
     $result = mysqli_stmt_get_result($stmt);
     $resultArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if(!$resultArr) {
-      return [];
-    }
-
-    return $resultArr;
+    return $resultArr ?? [];
   } catch (Exception $e) {
     return [];
   }
